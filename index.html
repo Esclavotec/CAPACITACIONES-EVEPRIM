@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>EVEPRIM</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!-- ===================== NAV ===================== -->
+<header class="nav">
+  <div class="nav-interior">
+    <button class="logo-mini" onclick="mostrarInicio()">
+      <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#F5C542" stroke-width="2.5"/><path d="M20 8L20 32M8 20L32 20" stroke="#16233A" stroke-width="2.5"/></svg>
+      EVEPRIM
+    </button>
+    <nav class="enlaces">
+      <button onclick="irA('inicio')">Inicio</button>
+      <button onclick="mostrarGeneral()">Generalidades</button>
+      <button onclick="mostrarHistoria()">Historia del proyecto</button>
+      <button onclick="irA('libros')">Elegir libro</button>
+    </nav>
+    <div class="nav-derecha">
+      <div class="buscador">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="campoBusqueda" type="text" placeholder="Buscar en el sitio..." oninput="buscar(this.value)" onfocus="buscar(this.value)">
+        <div id="resultadosBusqueda" class="resultados-busqueda oculto"></div>
+      </div>
+      <button class="btn-ingresar" id="botonNavIngresar" onclick="abrirModal()">Profesores: ingresar</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== VISTA INICIO ===================== -->
+<div id="vistaInicio">
+
+  <!-- HERO -->
+  <section class="hero" id="inicio" data-search="EVEPRIM inicio portada logo proyecto matemáticas sexto grado">
+    <div class="contenedor">
+      <div>
+        <div class="marca-logo">
+          <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#F5C542" stroke-width="2.5"/><path d="M20 8L20 32M8 20L32 20" stroke="#F4F6F0" stroke-width="2.5"/></svg>
+          <span>Proyecto EVEPRIM · Sexto grado · Costa Rica</span>
+        </div>
+        <h1>Los libros de matemáticas se piensan, se miden y se prueban</h1>
+        <p class="lead">EVEPRIM es una colección de cuatro libros de apoyo docente para sexto grado, pensados para acompañar el proceso de enseñanza de la geometría, las medidas, la estadística y la probabilidad en el aula costarricense.</p>
+        <div class="cta-fila">
+          <button class="btn-primario" onclick="irA('libros')">Elegir un libro</button>
+          <button class="btn-fantasma" onclick="irA('general')">Qué incluyen los libros</button>
+        </div>
+      </div>
+      <div class="compas-wrap">
+        <svg class="compas" viewBox="0 0 340 340" fill="none">
+          <circle class="trazo" cx="170" cy="170" r="120" stroke="#F5C542" stroke-width="3"/>
+          <g class="brazo">
+            <line x1="170" y1="170" x2="170" y2="50" stroke="#F4F6F0" stroke-width="4" stroke-linecap="round"/>
+            <line x1="170" y1="170" x2="255" y2="255" stroke="#F4F6F0" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="170" cy="170" r="6" fill="#F5C542"/>
+            <circle cx="255" cy="255" r="7" fill="#2FA88A"/>
+          </g>
+          <circle cx="170" cy="170" r="3" fill="#F4F6F0"/>
+          <text x="170" y="32" fill="#F4F6F0" font-family="Space Mono" font-size="11" text-anchor="middle">90°</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJETIVO / CREADORES / QUÉ BUSCAN -->
+  <section id="objetivo" data-search="objetivo del proyecto creadores autores qué buscan los libros">
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <span class="eyebrow">01 · El proyecto</span>
+        <h2>Objetivo del proyecto</h2>
+        <p>EVEPRIM nace para darle a cada docente de sexto grado un recurso claro, contextualizado y listo para usar en la planificación diaria de matemáticas, alineado con los programas de estudio del MEP.</p>
+      </div>
+      <div class="grid-objetivo">
+        <div class="tarjeta-plana">
+          <h4>¿Qué es EVEPRIM?</h4>
+          <p style="font-size:0.95rem;color:var(--tinta-suave)">Es un conjunto de cuatro libros de apoyo docente, uno por cada área temática de sexto grado, elaborados con actividades, ejemplos contextualizados y sugerencias metodológicas para el aula costarricense. El proyecto busca capacitar a las y los docentes en el uso pedagógico de cada libro, más allá de entregarlo como simple material impreso.</p>
+        </div>
+        <div class="tarjeta-plana">
+          <h4>Equipo creador</h4>
+          <ul class="lista-creadores">
+            <li><span class="punto-creador"></span><div><strong>Coordinación académica</strong><br><span style="color:var(--tinta-suave)">Escuela de Matemática, equipo de didáctica de la probabilidad y la estadística.</span></div></li>
+            <li><span class="punto-creador"></span><div><strong>Autoría de contenidos</strong><br><span style="color:var(--tinta-suave)">Equipo docente e investigador del proyecto EVEPRIM.</span></div></li>
+            <li><span class="punto-creador"></span><div><strong>Diseño y capacitación</strong><br><span style="color:var(--tinta-suave)">Área de formación continua para docentes de primaria.</span></div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="franja-buscan">
+        <div class="item"><span class="num">¿Qué buscan?</span><p>Que cada docente se sienta seguro llevando actividades de geometría, medidas, estadística y probabilidad al aula, con materiales pensados desde la realidad costarricense.</p></div>
+        <div class="item"><span class="num">¿Para quién?</span><p>Docentes de sexto grado de escuelas públicas y privadas que buscan renovar su práctica con recursos concretos y aplicables.</p></div>
+        <div class="item"><span class="num">¿Cómo se usa?</span><p>Cada libro se acompaña de una capacitación breve, un temario claro y una presentación descargable para trabajar en talleres.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN GENERAL SOBRE LOS LIBROS (resumen, la versión completa está en la página de Generalidades) -->
+  <section id="general" data-search="qué tienen los libros beneficios actividades contenido general">
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <span class="eyebrow">02 · Los libros</span>
+        <h2>¿Qué encontrará en cada libro?</h2>
+        <p>Los cuatro libros comparten una misma estructura pedagógica, pensada para que la transición de un área a otra sea natural tanto para quien enseña como para quien aprende.</p>
+      </div>
+      <div class="grid-general">
+        <div class="tarjeta-general">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M4 12h16"/></svg></div>
+          <h4>Contenido de cada libro</h4>
+          <p>Marco teórico breve, secuencia de unidades temáticas, ejemplos resueltos y datos curiosos, actividades y problemas que ayudan con la mediación pedagógica para cada tema.</p>
+        </div>
+        <div class="tarjeta-general">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+          <h4>Beneficios de usarlo</h4>
+          <p>Presenta herramientas extra para una clase práctica, con ejemplos contextualizados a Costa Rica y evaluación formativa lista para aplicar.</p>
+        </div>
+        <div class="tarjeta-general">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+          <h4>Actividades disponibles</h4>
+          <p>Juegos de aula, retos individuales y grupales, aplicaciones pedagógicas, Genially y mucho más aplicables en contextos escolares.</p>
+        </div>
+      </div>
+      <div style="margin-top:28px;">
+        <button class="btn-fantasma" style="border-color:var(--papel-linea);color:var(--tinta);" onclick="mostrarGeneral()">Ver generalidades completas →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTOR DE LIBROS -->
+  <section id="libros" data-search="escoger libro geometría medidas estadística probabilidad">
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <span class="eyebrow">03 · Elegir libro</span>
+        <h2>Escoja un libro para empezar</h2>
+        <p>Cada libro tiene su propio temario, su forma de obtenerlo y un espacio de capacitación con presentación descargable.</p>
+      </div>
+      <div class="grid-libros">
+        <div class="tarjeta-libro tl-geo">
+          <div class="franja"></div>
+          <svg class="forma" viewBox="0 0 46 46" fill="none"><path d="M23 6L41 40H5L23 6z" stroke="#2FA88A" stroke-width="3" stroke-linejoin="round"/></svg>
+          <h3>Geometría</h3>
+          <div class="portada-mini" id="miniPortada-geometria">
+            <p class="aviso-mini">Sin portada (agregue la URL en IMAGENES_PORTADA)</p>
+            <img id="miniImg-geometria" alt="Portada del libro de Geometría">
+          </div>
+          <button class="etiqueta" onclick="mostrarLibro('geometria')">Ver libro →</button>
+        </div>
+        <div class="tarjeta-libro tl-med">
+          <div class="franja"></div>
+          <div class="cinta-no-disponible">No disponible por el momento</div>
+          <svg class="forma" viewBox="0 0 46 46" fill="none"><rect x="5" y="19" width="36" height="8" rx="2" stroke="#F2A93B" stroke-width="3"/><path d="M11 19v8M19 19v8M27 19v8M35 19v8" stroke="#F2A93B" stroke-width="2.5"/></svg>
+          <h3>Medidas</h3>
+          <div class="portada-mini" id="miniPortada-medidas">
+            <p class="aviso-mini">Sin portada (agregue la URL en IMAGENES_PORTADA)</p>
+            <img id="miniImg-medidas" alt="Portada del libro de Medidas">
+          </div>
+          <button class="etiqueta" disabled title="No disponible por el momento">No disponible</button>
+        </div>
+        <div class="tarjeta-libro tl-est">
+          <div class="franja"></div>
+          <div class="cinta-no-disponible">No disponible por el momento</div>
+          <svg class="forma" viewBox="0 0 46 46" fill="none"><path d="M7 39V23M18 39V13M29 39V27M40 39V17" stroke="#7B5EF0" stroke-width="4" stroke-linecap="round"/><path d="M6 39h34" stroke="#7B5EF0" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3>Estadística</h3>
+          <div class="portada-mini" id="miniPortada-estadistica">
+            <p class="aviso-mini">Sin portada (agregue la URL en IMAGENES_PORTADA)</p>
+            <img id="miniImg-estadistica" alt="Portada del libro de Estadística">
+          </div>
+          <button class="etiqueta" disabled title="No disponible por el momento">No disponible</button>
+        </div>
+        <div class="tarjeta-libro tl-prob">
+          <div class="franja"></div>
+          <div class="cinta-no-disponible">No disponible por el momento</div>
+          <svg class="forma" viewBox="0 0 46 46" fill="none"><rect x="6" y="6" width="34" height="34" rx="7" stroke="#E85D8C" stroke-width="3"/><circle cx="16" cy="16" r="2.4" fill="#E85D8C"/><circle cx="30" cy="16" r="2.4" fill="#E85D8C"/><circle cx="16" cy="30" r="2.4" fill="#E85D8C"/><circle cx="30" cy="30" r="2.4" fill="#E85D8C"/><circle cx="23" cy="23" r="2.4" fill="#E85D8C"/></svg>
+          <h3>Probabilidad</h3>
+          <div class="portada-mini" id="miniPortada-probabilidad">
+            <p class="aviso-mini">Sin portada (agregue la URL en IMAGENES_PORTADA)</p>
+            <img id="miniImg-probabilidad" alt="Portada del libro de Probabilidad">
+          </div>
+          <button class="etiqueta" disabled title="No disponible por el momento">No disponible</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPINIONES DE LA COMUNIDAD DOCENTE -->
+  <section id="opiniones" data-search="comentarios opiniones burbujas comunidad docente">
+    <div class="contenedor">
+      <div class="titulo-seccion">
+        <span class="eyebrow">04 · Comunidad</span>
+        <h2>Opiniones de la comunidad docente</h2>
+        <p>Comparta una opinión, un dato curioso o una experiencia de aula. Los comentarios de todas las personas se van publicando y aparecen de a poco como burbujas en la parte de abajo de la pantalla.</p>
+      </div>
+      <div class="tarjeta-plana" style="max-width:520px;">
+        <div class="campo">
+          <label>Su nombre (opcional)</label>
+          <input type="text" id="inputNombreComentario" placeholder="Docente anónimo" maxlength="60">
+        </div>
+        <div class="campo">
+          <label>Su comentario</label>
+          <textarea id="inputTextoComentario" class="textarea-comentario" rows="3" maxlength="240" placeholder="Escriba aquí su opinión..."></textarea>
+        </div>
+        <button class="btn-primario" style="background:var(--pizarra);color:var(--tiza);" onclick="enviarComentario()">Publicar comentario</button>
+        <p id="avisoComentario" class="aviso-comentario oculto"></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== VISTA DE CADA LIBRO ===================== -->
+<div id="vistaLibro" class="oculto"></div>
+
+<!-- ===================== PÁGINA: GENERALIDADES DE LOS LIBROS ===================== -->
+<div id="vistaGeneral" class="oculto">
+  <section class="pagina-hero">
+    <div class="contenedor">
+      <button class="btn-volver" onclick="mostrarInicio()">← Volver al inicio</button>
+      <span class="eyebrow" style="color:rgba(244,246,240,0.75)">Generalidades</span>
+      <h2>Generalidades de los libros EVEPRIM</h2>
+      <p>Una mirada completa a la estructura, la metodología y los beneficios que comparten los cuatro libros de la colección, más allá del contenido específico de cada área.</p>
+    </div>
+  </section>
+  <section class="pagina-cuerpo">
+    <div class="contenedor">
+      <div class="tarjeta-plana" style="margin-bottom:48px;">
+        <p style="font-size:0.95rem;color:var(--tinta-suave);margin:0;">La Escuela de Matemática del Instituto Tecnológico de Costa Rica, por medio de su proyecto Creación de recursos educativos abiertos para estudiantes de sexto de año de Educación General Básica en Costa Rica (Eveprim 6.1), pretende contribuir a la formación académica de los estudiantes de sexto año de primaria y a la vez ofrecer un recurso para padres y maestros de esta población. Para ello, se han considerado las habilidades contempladas en el programa de estudios vigente, en el área de Matemática, según el Ministerio de Educación Pública de Costa Rica. El equipo de Eveprim 6.1, le insta a revisar con atención todo el material a su disposición, ya que ha sido elaborado con el fin de colaborar en el proceso de enseñanza y aprendizaje de las Matemáticas.</p>
+      </div>
+
+      <div class="titulo-seccion">
+        <span class="eyebrow">Estructura del libro</span>
+        <h2 style="font-size:1.6rem;">Así está organizado cada libro</h2>
+      </div>
+      <div class="grid-general">
+        <div class="tarjeta-general">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v16M4 4h16M4 12h16"/></svg></div>
+          <h4>Capítulos del libro</h4>
+          <p>Los temas se dividen por capítulos; la cantidad varía según el libro. Cada capítulo incluye marco teórico breve, ejemplos resueltos paso a paso y ejercicios graduados en dificultad.</p>
+        </div>
+        <div class="tarjeta-general">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+          <h4>Guía docente</h4>
+          <p>Las sugerencias de mediación pedagógica, materiales necesarios y variantes de las actividades no están dentro del libro: se encuentran aquí, en esta página web, organizadas por libro.</p>
+        </div>
+        <div class="tarjeta-general">
+          <div class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+          <h4>Actividades</h4>
+          <p>Juegos, retos individuales y grupales, clasificadas según estén dentro o fuera del programa del MEP.</p>
+        </div>
+      </div>
+
+      <div class="titulo-seccion" style="margin-top:56px;">
+        <span class="eyebrow">Iconografía</span>
+        <h2 style="font-size:1.6rem;">Símbolos durante el libro:</h2>
+        <p>A lo largo de este libro se utilizan una serie de símbolos para representar secciones determinadas, las cuales sus significados son:</p>
+      </div>
+      <div class="grid-simbolos">
+        <div class="tarjeta-simbolo">
+          <div class="marco-simbolo" id="marcoSimbolo-s1"><p class="aviso-simbolo">Sin imagen (agregar en SIMBOLOS_IMAGENES)</p><img id="imgSimbolo-s1" alt="Activación de conocimientos"></div>
+          <h5>Activación de conocimientos</h5>
+          <p>Marca las preguntas iniciales para recuperar lo que el estudiante ya sabe sobre el tema.</p>
+        </div>
+        <div class="tarjeta-simbolo">
+          <div class="marco-simbolo" id="marcoSimbolo-s2"><p class="aviso-simbolo">Sin imagen (agregar en SIMBOLOS_IMAGENES)</p><img id="imgSimbolo-s2" alt="Recuerda que..."></div>
+          <h5>Recuerda que...</h5>
+          <p>Presenta contenidos previos necesarios para comprender los nuevos aprendizajes.</p>
+        </div>
+        <div class="tarjeta-simbolo">
+          <div class="marco-simbolo" id="marcoSimbolo-s3"><p class="aviso-simbolo">Sin imagen (agregar en SIMBOLOS_IMAGENES)</p><img id="imgSimbolo-s3" alt="Para saber más..."></div>
+          <h5>Para saber más...</h5>
+          <p>Permite profundizar en el contenido y ampliar conocimientos útiles para niveles superiores.</p>
+        </div>
+        <div class="tarjeta-simbolo">
+          <div class="marco-simbolo" id="marcoSimbolo-s4"><p class="aviso-simbolo">Sin imagen (agregar en SIMBOLOS_IMAGENES)</p><img id="imgSimbolo-s4" alt="Sabías que..."></div>
+          <h5>Sabías que...</h5>
+          <p>Relaciona la matemática con hechos históricos, aplicaciones cotidianas y curiosidades.</p>
+        </div>
+        <div class="tarjeta-simbolo">
+          <div class="marco-simbolo" id="marcoSimbolo-s5"><p class="aviso-simbolo">Sin imagen (agregar en SIMBOLOS_IMAGENES)</p><img id="imgSimbolo-s5" alt="Videos"></div>
+          <h5>Videos</h5>
+          <p>Ofrece materiales audiovisuales para introducir, reforzar o explicar paso a paso contenidos, ejercicios y problemas.</p>
+        </div>
+        <div class="tarjeta-simbolo">
+          <div class="marco-simbolo" id="marcoSimbolo-s6"><p class="aviso-simbolo">Sin imagen (agregar en SIMBOLOS_IMAGENES)</p><img id="imgSimbolo-s6" alt="Práctica"></div>
+          <h5>Práctica</h5>
+          <p>Incluye ejercicios y problemas al final de cada capítulo, con soluciones y, en algunos casos, enlaces a videos o aplicaciones interactivas.</p>
+        </div>
+        <div class="tarjeta-simbolo">
+          <div class="marco-simbolo" id="marcoSimbolo-s7"><p class="aviso-simbolo">Sin imagen (agregar en SIMBOLOS_IMAGENES)</p><img id="imgSimbolo-s7" alt="Aplicaciones tecnológicas"></div>
+          <h5>Aplicaciones tecnológicas</h5>
+          <p>Ofrece recursos interactivos, como GeoGebra, para reforzar y profundizar los aprendizajes de forma dinámica.</p>
+        </div>
+      </div>
+
+      <div class="titulo-seccion" style="margin-top:56px;">
+        <span class="eyebrow">Metodología y público meta</span>
+        <h2 style="font-size:1.6rem;">¿Para quién y cómo se usan?</h2>
+      </div>
+      <div class="grid-objetivo">
+        <div class="tarjeta-plana">
+          <h4>Metodología pedagógica</h4>
+          <p style="font-size:0.95rem;color:var(--tinta-suave)">Los libros siguen un enfoque constructivista: cada tema parte de una situación cotidiana costarricense, avanza hacia la formalización matemática y cierra con actividades de aplicación. Se prioriza la manipulación concreta antes que la memorización de fórmulas.</p>
+        </div>
+        <div class="tarjeta-plana">
+          <h4>Público meta</h4>
+          <p style="font-size:0.95rem;color:var(--tinta-suave)">Docentes de sexto grado de escuelas públicas y privadas de Costa Rica, así como personas en formación docente que deseen conocer estrategias concretas de mediación en geometría, medidas, estadística y probabilidad.</p>
+        </div>
+      </div>
+
+      <div class="franja-buscan">
+        <div class="item"><span class="num">Beneficio 1</span><p>Ahorra tiempo de planificación al entregar actividades y evaluaciones ya diseñadas y listas para adaptar.</p></div>
+        <div class="item"><span class="num">Beneficio 2</span><p>Ofrece ejemplos contextualizados a la realidad costarricense, no traducciones de materiales extranjeros.</p></div>
+        <div class="item"><span class="num">Beneficio 3</span><p>Distingue con claridad qué actividades responden al programa oficial del MEP y cuáles son de enriquecimiento adicional.</p></div>
+      </div>
+
+      <div class="nota-imagenes">Las imágenes que se utilizan en este libro digital son de uso libre y gratuito, salvo indicación contraria. Algunas de ellas fueron diseñadas a partir de recursos de @Freepik.</div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== PÁGINA: HISTORIA DEL PROYECTO ===================== -->
+<div id="vistaHistoria" class="oculto">
+  <section class="pagina-hero">
+    <div class="contenedor">
+      <button class="btn-volver" onclick="mostrarInicio()">← Volver al inicio</button>
+      <span class="eyebrow" style="color:rgba(244,246,240,0.75)">Historia</span>
+      <h2>Historia del proyecto EVEPRIM</h2>
+      <p>El recorrido que llevó a la creación de los cuatro libros, desde el diagnóstico inicial en las aulas hasta la capacitación docente actual. Los hitos y años son de ejemplo: reemplácelos por la cronología real del proyecto.</p>
+    </div>
+  </section>
+  <section class="pagina-cuerpo">
+    <div class="contenedor">
+      <ul class="temario" style="max-width:720px;">
+        <li>
+          <h5>Diagnóstico de necesidades (ejemplo: 2022)</h5>
+          <p>Se identifican vacíos en los materiales de apoyo docente para geometría, medidas, estadística y probabilidad en sexto grado.</p>
+        </li>
+        <li>
+          <h5>Diseño del proyecto EVEPRIM (ejemplo: 2023)</h5>
+          <p>Se conforma el equipo de la Escuela de Matemática y se define la estructura de los cuatro libros de la colección.</p>
+        </li>
+        <li>
+          <h5>Elaboración de contenidos (ejemplo: 2023–2024)</h5>
+          <p>Redacción de las unidades temáticas, validación de ejemplos y diseño de las actividades dentro y fuera del programa del MEP.</p>
+        </li>
+        <li>
+          <h5>Pilotaje en aulas (ejemplo: 2024)</h5>
+          <p>Un grupo de docentes prueba los libros en sus lecciones y aporta observaciones para ajustar contenidos y actividades.</p>
+        </li>
+        <li>
+          <h5>Publicación oficial (ejemplo: 2025)</h5>
+          <p>Se liberan las versiones definitivas de los cuatro libros junto con sus presentaciones de capacitación.</p>
+        </li>
+        <li>
+          <h5>Capacitación docente y expansión (ejemplo: 2026)</h5>
+          <p>Inicio de los talleres de capacitación y de esta plataforma para acompañar a más docentes en el uso de los libros.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="contenedor">
+    <div><strong>EVEPRIM</strong> · Proyecto de matemáticas para sexto grado, Costa Rica.</div>
+    <div>Creación de la Página: Antony Arias Valle y Diego González Rodríguez</div>
+    <div class="notas">
+      <div>Cada libro tuvo diversos colaboradores presentes en los agradecimientos, pero nuevamente les extendemos un rotundo agradecimiento.</div>
+      <div>La página web en su diseño tuvo ayuda de <a href="https://claude.ai" target="_blank" rel="noopener">Claude.AI</a> en el apartado visual.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== MODAL LOGIN ===================== -->
+<div id="fondoModal" class="fondo-modal oculto" onclick="if(event.target===this) cerrarModal()">
+  <div class="modal">
+    <button class="cerrar" onclick="cerrarModal()">✕</button>
+    <span class="eyebrow">Acceso docente</span>
+    <h3 style="margin-top:6px;">Bienvenido a EVEPRIM</h3>
+    <div class="pestañas-login">
+      <button id="pestIngreso" class="activa" onclick="cambiarPestaña('ingreso')">Iniciar sesión</button>
+      <button id="pestRegistro" onclick="cambiarPestaña('registro')">Registrarme</button>
+    </div>
+    <div id="avisoErrorLogin" class="aviso-dev oculto" style="color:#B93D68;border-color:#B93D68;"></div>
+    <form id="formLogin" onsubmit="manejarFormularioLogin(event)">
+      <div id="campoNombre" class="campo oculto">
+        <label>Nombre completo</label>
+        <input id="inputNombre" type="text" placeholder="Nombre y apellidos">
+      </div>
+      <div class="campo">
+        <label>Correo institucional</label>
+        <input id="inputCorreo" type="email" placeholder="docente@mep.go.cr" required>
+      </div>
+      <div class="campo">
+        <label>Contraseña</label>
+        <input id="inputContraseña" type="password" placeholder="••••••••" required minlength="6">
+      </div>
+      <button type="submit" id="botonLogin" class="btn-primario" style="width:100%;background:var(--pizarra);color:var(--tiza);">
+        <span id="textoBotonLogin">Ingresar</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== ESCENARIO DE BURBUJAS DE COMENTARIOS ===================== -->
+<div id="escenaComentarios" class="escena-comentarios" aria-hidden="true"></div>
+
+<!-- ===================== COOKIES ===================== -->
+<div id="bannerCookies" class="banner-cookies oculto">
+  <p>Usamos cookies para recordar sus preferencias y mejorar la experiencia de capacitación en este sitio. Puede aceptarlas o rechazarlas.</p>
+  <div class="acciones">
+    <button class="rechazar" onclick="responderCookies(false)">Rechazar</button>
+    <button class="aceptar" onclick="responderCookies(true)">Aceptar</button>
+  </div>
+</div>
+    <script src='https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js'></script>
+<script src='https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js'></script>
+<script src='https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js'></script><script  src="./script.js"></script>
+
+  </body>
+  
+</html>
