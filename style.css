@@ -423,6 +423,20 @@ footer .notas{margin-top:8px;padding-top:16px;border-top:1px solid rgba(244,246,
   font-size:0.78rem;color:var(--tinta-suave);background:#fff;border:1px dashed var(--papel-linea);
   border-radius:10px;padding:10px 12px;margin-bottom:14px;
 }
+.aviso-exito{
+  font-size:0.82rem;color:#1B7A4A;background:#EAF7EF;border:1px solid #BFE6CE;
+  border-radius:10px;padding:10px 12px;margin-bottom:14px;
+}
+.link-olvido{
+  text-align:right;font-size:0.8rem;color:var(--tinta-suave);margin:-6px 0 16px;cursor:pointer;
+  text-decoration:underline;text-underline-offset:2px;
+}
+.link-olvido:hover{color:var(--pizarra);}
+.link-volver{
+  font-size:0.8rem;color:var(--tinta-suave);margin:0 0 16px;cursor:pointer;
+  text-decoration:underline;text-underline-offset:2px;display:inline-block;
+}
+.link-volver:hover{color:var(--pizarra);}
 
 /* ===== OPINIONES / BURBUJAS DE COMENTARIOS ===== */
 .textarea-comentario{

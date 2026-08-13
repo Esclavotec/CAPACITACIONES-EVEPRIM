@@ -378,12 +378,14 @@
   <div class="modal">
     <button class="cerrar" onclick="cerrarModal()">✕</button>
     <span class="eyebrow">Acceso docente</span>
-    <h3 style="margin-top:6px;">Bienvenido a EVEPRIM</h3>
-    <div class="pestañas-login">
+    <h3 id="tituloModal" style="margin-top:6px;">Bienvenido a EVEPRIM</h3>
+    <div id="pestañasLogin" class="pestañas-login">
       <button id="pestIngreso" class="activa" onclick="cambiarPestaña('ingreso')">Iniciar sesión</button>
       <button id="pestRegistro" onclick="cambiarPestaña('registro')">Registrarme</button>
     </div>
+    <span id="linkVolverIngreso" class="link-volver oculto" onclick="cambiarPestaña('ingreso')">← Volver a iniciar sesión</span>
     <div id="avisoErrorLogin" class="aviso-dev oculto" style="color:#B93D68;border-color:#B93D68;"></div>
+    <div id="avisoExitoLogin" class="aviso-exito oculto"></div>
     <form id="formLogin" onsubmit="manejarFormularioLogin(event)">
       <div id="campoNombre" class="campo oculto">
         <label>Nombre completo</label>
@@ -393,10 +395,11 @@
         <label>Correo institucional</label>
         <input id="inputCorreo" type="email" placeholder="docente@mep.go.cr" required>
       </div>
-      <div class="campo">
+      <div id="campoContraseña" class="campo">
         <label>Contraseña</label>
         <input id="inputContraseña" type="password" placeholder="••••••••" required minlength="6">
       </div>
+      <p id="linkOlvido" class="link-olvido" onclick="cambiarPestaña('recuperar')">¿Olvidó su contraseña?</p>
       <button type="submit" id="botonLogin" class="btn-primario" style="width:100%;background:var(--pizarra);color:var(--tiza);">
         <span id="textoBotonLogin">Ingresar</span>
       </button>
@@ -415,6 +418,9 @@
     <button class="aceptar" onclick="responderCookies(true)">Aceptar</button>
   </div>
 </div>
+
+</body>
+</html>
     <script src='https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js'></script>
 <script src='https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js'></script>
 <script src='https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js'></script><script  src="./script.js"></script>

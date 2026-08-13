@@ -1,3 +1,40 @@
+/* ============ BUSCADOR ============
+   Se declara aquí, al inicio del body, para que esté listo
+   de inmediato y no dependa de que terminen de cargar los
+   scripts externos (Firebase) más abajo. Así se evita el error
+   "Cannot access 'INDICE_BUSQUEDA' before initialization" si
+   alguien hace clic en el buscador mientras la página aún carga. */
+const INDICE_BUSQUEDA = [
+  {titulo:'Inicio y objetivo del proyecto', accion:()=>irA('inicio')},
+  {titulo:'Objetivo del proyecto y creadores', accion:()=>irA('objetivo')},
+  {titulo:'Generalidades de los libros', accion:()=>mostrarGeneral()},
+  {titulo:'Historia del proyecto', accion:()=>mostrarHistoria()},
+  {titulo:'Elegir un libro', accion:()=>irA('libros')},
+  {titulo:'Opiniones de la comunidad docente', accion:()=>irA('opiniones')},
+  {titulo:'Libro de Geometría', accion:()=>mostrarLibro('geometria')},
+  {titulo:'Libro de Medidas', accion:()=>mostrarLibro('medidas')},
+  {titulo:'Libro de Estadística', accion:()=>mostrarLibro('estadistica')},
+  {titulo:'Libro de Probabilidad', accion:()=>mostrarLibro('probabilidad')},
+];
+function buscar(texto){
+  const caja = document.getElementById('resultadosBusqueda');
+  const q = texto.trim().toLowerCase();
+  if(!q){ caja.classList.add('oculto'); caja.innerHTML=''; return; }
+  const coincidencias = INDICE_BUSQUEDA.filter(r => r.titulo.toLowerCase().includes(q));
+  caja.innerHTML = coincidencias.length
+    ? coincidencias.map((r,i)=>`<button onclick="ejecutarResultado(${i})">${r.titulo}</button>`).join('')
+    : `<div class="vacio">Sin resultados para "${texto}"</div>`;
+  window._resultadosActuales = coincidencias;
+  caja.classList.remove('oculto');
+}
+function ejecutarResultado(i){
+  window._resultadosActuales[i].accion();
+  document.getElementById('resultadosBusqueda').classList.add('oculto');
+  document.getElementById('campoBusqueda').value='';
+}
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.buscador')) document.getElementById('resultadosBusqueda').classList.add('oculto');
+});
 /* ============ CONFIGURACIÓN DE FIREBASE ============
    Pegue aquí el objeto firebaseConfig que Firebase le entrega
    al registrar la app web (Configuración del proyecto > General
@@ -434,19 +471,41 @@ function presentarPantallaCompleta(clave){
 let modoLogin = 'ingreso';
 function abrirModal(){
   document.getElementById('fondoModal').classList.remove('oculto');
-  ocultarErrorLogin();
+  cambiarPestaña('ingreso');
 }
 function cerrarModal(){ document.getElementById('fondoModal').classList.add('oculto'); }
 function cambiarPestaña(cual){
   modoLogin = cual;
   const esIngreso = cual === 'ingreso';
+  const esRegistro = cual === 'registro';
+  const esRecuperar = cual === 'recuperar';
+
   document.getElementById('pestIngreso').classList.toggle('activa', esIngreso);
-  document.getElementById('pestRegistro').classList.toggle('activa', !esIngreso);
-  document.getElementById('campoNombre').classList.toggle('oculto', esIngreso);
-  document.getElementById('textoBotonLogin').textContent = esIngreso ? 'Ingresar' : 'Crear cuenta';
+  document.getElementById('pestRegistro').classList.toggle('activa', esRegistro);
+  document.getElementById('pestañasLogin').classList.toggle('oculto', esRecuperar);
+  document.getElementById('linkVolverIngreso').classList.toggle('oculto', !esRecuperar);
+  document.getElementById('campoNombre').classList.toggle('oculto', !esRegistro);
+  document.getElementById('campoContraseña').classList.toggle('oculto', esRecuperar);
+  document.getElementById('inputContraseña').required = !esRecuperar;
+  document.getElementById('linkOlvido').classList.toggle('oculto', !esIngreso);
+
+  const titulo = document.getElementById('tituloModal');
+  const boton = document.getElementById('textoBotonLogin');
+  if(esRecuperar){
+    titulo.textContent = 'Recuperar contraseña';
+    boton.textContent = 'Enviar correo de restablecimiento';
+  } else if(esRegistro){
+    titulo.textContent = 'Bienvenido a EVEPRIM';
+    boton.textContent = 'Crear cuenta';
+  } else {
+    titulo.textContent = 'Bienvenido a EVEPRIM';
+    boton.textContent = 'Ingresar';
+  }
   ocultarErrorLogin();
+  ocultarExitoLogin();
 }
 function mostrarErrorLogin(mensaje){
+  ocultarExitoLogin();
   const aviso = document.getElementById('avisoErrorLogin');
   aviso.textContent = mensaje;
   aviso.classList.remove('oculto');
@@ -454,11 +513,21 @@ function mostrarErrorLogin(mensaje){
 function ocultarErrorLogin(){
   document.getElementById('avisoErrorLogin').classList.add('oculto');
 }
+function mostrarExitoLogin(mensaje){
+  ocultarErrorLogin();
+  const aviso = document.getElementById('avisoExitoLogin');
+  aviso.textContent = mensaje;
+  aviso.classList.remove('oculto');
+}
+function ocultarExitoLogin(){
+  document.getElementById('avisoExitoLogin').classList.add('oculto');
+}
 
 /* ============ AUTENTICACIÓN DE DOCENTES (Firebase) ============ */
 function manejarFormularioLogin(evento){
   evento.preventDefault();
   ocultarErrorLogin();
+  ocultarExitoLogin();
 
   if(!auth || !db){
     mostrarErrorLogin('El registro aún no está activado: falta pegar la configuración de Firebase (FIREBASE_CONFIG) en el código.');
@@ -473,7 +542,16 @@ function manejarFormularioLogin(evento){
 
   const restaurarBoton = ()=>{ boton.disabled = false; };
 
-  if(modoLogin === 'registro'){
+  if(modoLogin === 'recuperar'){
+    if(!correo){ mostrarErrorLogin('Ingrese su correo institucional.'); restaurarBoton(); return; }
+    auth.sendPasswordResetEmail(correo)
+      .then(()=>{
+        restaurarBoton();
+        mostrarExitoLogin('Le enviamos un correo a ' + correo + ' con un enlace para poner una contraseña nueva. Revise también la carpeta de spam.');
+        document.getElementById('formLogin').reset();
+      })
+      .catch(err=>{ restaurarBoton(); mostrarErrorLogin(traducirErrorFirebase(err)); });
+  } else if(modoLogin === 'registro'){
     if(!nombre){ mostrarErrorLogin('Ingrese su nombre completo.'); restaurarBoton(); return; }
     auth.createUserWithEmailAndPassword(correo, contraseña)
       .then(credencial => db.collection('docentes').doc(credencial.user.uid).set({
@@ -496,6 +574,7 @@ function traducirErrorFirebase(err){
   if(codigo.includes('invalid-email')) return 'El correo no es válido.';
   if(codigo.includes('weak-password')) return 'La contraseña debe tener al menos 6 caracteres.';
   if(codigo.includes('user-not-found') || codigo.includes('wrong-password') || codigo.includes('invalid-credential')) return 'Correo o contraseña incorrectos.';
+  if(codigo.includes('too-many-requests')) return 'Demasiados intentos. Espere unos minutos e intente de nuevo.';
   return 'Ocurrió un error: ' + err.message;
 }
 if(auth){
@@ -510,39 +589,6 @@ if(auth){
     }
   });
 }
-
-/* ============ BUSCADOR ============ */
-const INDICE_BUSQUEDA = [
-  {titulo:'Inicio y objetivo del proyecto', accion:()=>irA('inicio')},
-  {titulo:'Objetivo del proyecto y creadores', accion:()=>irA('objetivo')},
-  {titulo:'Generalidades de los libros', accion:()=>mostrarGeneral()},
-  {titulo:'Historia del proyecto', accion:()=>mostrarHistoria()},
-  {titulo:'Elegir un libro', accion:()=>irA('libros')},
-  {titulo:'Opiniones de la comunidad docente', accion:()=>irA('opiniones')},
-  {titulo:'Libro de Geometría', accion:()=>mostrarLibro('geometria')},
-  {titulo:'Libro de Medidas', accion:()=>mostrarLibro('medidas')},
-  {titulo:'Libro de Álgebra', accion:()=>mostrarLibro('estadistica')},
-  {titulo:'Libro de Probabilidad', accion:()=>mostrarLibro('probabilidad')},
-];
-function buscar(texto){
-  const caja = document.getElementById('resultadosBusqueda');
-  const q = texto.trim().toLowerCase();
-  if(!q){ caja.classList.add('oculto'); caja.innerHTML=''; return; }
-  const coincidencias = INDICE_BUSQUEDA.filter(r => r.titulo.toLowerCase().includes(q));
-  caja.innerHTML = coincidencias.length
-    ? coincidencias.map((r,i)=>`<button onclick="ejecutarResultado(${i})">${r.titulo}</button>`).join('')
-    : `<div class="vacio">Sin resultados para "${texto}"</div>`;
-  window._resultadosActuales = coincidencias;
-  caja.classList.remove('oculto');
-}
-function ejecutarResultado(i){
-  window._resultadosActuales[i].accion();
-  document.getElementById('resultadosBusqueda').classList.add('oculto');
-  document.getElementById('campoBusqueda').value='';
-}
-document.addEventListener('click', (e)=>{
-  if(!e.target.closest('.buscador')) document.getElementById('resultadosBusqueda').classList.add('oculto');
-});
 
 /* ============ COOKIES (aviso en memoria, no persistente en esta vista previa) ============ */
 setTimeout(()=>{ document.getElementById('bannerCookies').classList.remove('oculto'); }, 900);
